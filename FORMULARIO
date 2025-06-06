@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario de Registro</title>
+</head>
+<body>
+  <h2>Formulario de Registro</h2>
+  <form id="miFormulario">
+    <label>Nombre:</label><br>
+    <input type="text" name="nombre" required><br><br>
+    
+    <label>Cédula:</label><br>
+    <input type="text" name="cedula" required><br><br>
+    
+    <label>Dirección:</label><br>
+    <input type="text" name="direccion" required><br><br>
+    
+    <label>Barrio:</label><br>
+    <input type="text" name="barrio" required><br><br>
+    
+    <label>Sexo:</label><br>
+    <select name="sexo" required>
+      <option value="">Selecciona</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="Otro">Otro</option>
+    </select><br><br>
+    
+    <label>Persona LGTBI:</label><br>
+    <select name="personaLGTBI" required>
+      <option value="">Selecciona</option>
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select><br><br>
+    
+    <label>Edad:</label><br>
+    <input type="number" name="edad" min="0" required><br><br>
+    
+    <label>¿Tiene inscrito la cédula?:</label><br>
+    <select name="tieneCedula" required>
+      <option value="">Selecciona</option>
+      <option value="Sí">Sí</option>
+      <option value="No">No</option>
+    </select><br><br>
+    
+    <label>Lugar donde siempre ha votado:</label><br>
+    <input type="text" name="lugarVotado" required><br><br>
+    
+    <label>Referido:</label><br>
+    <input type="text" name="referido"><br><br>
+    
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p id="respuesta"></p>
+
+  <script>
+    const form = document.getElementById('miFormulario');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const params = new URLSearchParams(formData);
+
+      fetch('https://script.google.com/macros/s/AKfycbz4LWdEYSN0kPRaZAjoAtbSBnG-ye5DLJAiynbMv7R2RZqCz6VXLPZLruNp377zlhP0/exec', {
+        method: 'POST',
+        body: params
+      })
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById('respuesta').innerText = text;
+        form.reset();
+      })
+      .catch(error => {
+        document.getElementById('respuesta').innerText = "Error al enviar datos.";
+        console.error(error);
+      });
+    });
+  </script>
+</body>
+</html>
