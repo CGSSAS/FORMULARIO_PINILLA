@@ -1,80 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Formulario de Registro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+    form {
+      background: white;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .sexo-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .sexo-group label {
+      font-weight: normal;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h2>Formulario de Registro</h2>
-  <form id="miFormulario">
-    <label>Nombre:</label><br>
-    <input type="text" name="nombre" required><br><br>
-    
-    <label>Cédula:</label><br>
-    <input type="text" name="cedula" required><br><br>
-    
-    <label>Dirección:</label><br>
-    <input type="text" name="direccion" required><br><br>
-    
-    <label>Barrio:</label><br>
-    <input type="text" name="barrio" required><br><br>
-    
-    <label>Sexo:</label><br>
-    <select name="sexo" required>
-      <option value="">Selecciona</option>
-      <option value="Masculino">Masculino</option>
-      <option value="Femenino">Femenino</option>
-      <option value="Otro">Otro</option>
-    </select><br><br>
-    
-    <label>Persona LGTBI:</label><br>
-    <select name="personaLGTBI" required>
-      <option value="">Selecciona</option>
+
+  <form action="https://formsubmit.co/TU_CORREO@ejemplo.com" method="POST">
+    <h2>Formulario de Registro</h2>
+
+    <label for="nombre">Nombre completo</label>
+    <input type="text" id="nombre" name="nombre_completo" required>
+
+    <label for="cedula">Cédula</label>
+    <input type="text" id="cedula" name="cedula" required>
+
+    <label for="direccion">Dirección</label>
+    <input type="text" id="direccion" name="direccion">
+
+    <label for="barrio">Barrio</label>
+    <input type="text" id="barrio" name="barrio">
+
+    <label for="comuna">Comuna</label>
+    <input type="text" id="comuna" name="comuna">
+
+    <label for="correo">Correo electrónico</label>
+    <input type="email" id="correo" name="correo_electronico">
+
+    <label for="telefono">Teléfono</label>
+    <input type="tel" id="telefono" name="telefono">
+
+    <label>Sexo</label>
+    <div class="sexo-group">
+      <label><input type="radio" name="sexo" value="Mujer"> Mujer</label>
+      <label><input type="radio" name="sexo" value="Hombre"> Hombre</label>
+      <label><input type="radio" name="sexo" value="LGTIQ+"> LGTIQ+</label>
+    </div>
+
+    <label for="sitio_votacion">Sitio de votación</label>
+    <input type="text" id="sitio_votacion" name="sitio_votacion">
+
+    <label for="inscrita">¿Tiene inscrita la cédula?</label>
+    <select id="inscrita" name="tiene_inscrita_cedula">
+      <option value="">Seleccione...</option>
       <option value="Sí">Sí</option>
       <option value="No">No</option>
-    </select><br><br>
-    
-    <label>Edad:</label><br>
-    <input type="number" name="edad" min="0" required><br><br>
-    
-    <label>¿Tiene inscrito la cédula?:</label><br>
-    <select name="tieneCedula" required>
-      <option value="">Selecciona</option>
-      <option value="Sí">Sí</option>
-      <option value="No">No</option>
-    </select><br><br>
-    
-    <label>Lugar donde siempre ha votado:</label><br>
-    <input type="text" name="lugarVotado" required><br><br>
-    
-    <label>Referido:</label><br>
-    <input type="text" name="referido"><br><br>
-    
-    <button type="submit">Enviar</button>
+    </select>
+
+    <label for="partido">Partido político actual</label>
+    <input type="text" id="partido" name="partido_politico_actual">
+
+    <label for="observacion">Observación</label>
+    <textarea id="observacion" name="observacion" rows="4"></textarea>
+
+    <!-- Configuración de FormSubmit -->
+    <input type="hidden" name="_next" value="gracias.html">
+    <input type="hidden" name="_captcha" value="false">
+
+    <button type="submit">Enviar formulario</button>
   </form>
 
-  <p id="respuesta"></p>
-
-  <script>
-    const form = document.getElementById('miFormulario');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const params = new URLSearchParams(formData);
-
-      fetch('https://script.google.com/macros/s/AKfycbz4LWdEYSN0kPRaZAjoAtbSBnG-ye5DLJAiynbMv7R2RZqCz6VXLPZLruNp377zlhP0/exec', {
-        method: 'POST',
-        body: params
-      })
-      .then(response => response.text())
-      .then(text => {
-        document.getElementById('respuesta').innerText = text;
-        form.reset();
-      })
-      .catch(error => {
-        document.getElementById('respuesta').innerText = "Error al enviar datos.";
-        console.error(error);
-      });
-    });
-  </script>
 </body>
 </html>
